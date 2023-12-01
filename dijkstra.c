@@ -42,11 +42,43 @@ void dijkstra(int **graph, int num_cities, int src, int K) {
             // printf("HHHH\n");
             // printf("j is %d\n", j);
             // printf("%d\n", graph[U][j]);
-            if((graph[U][j] != 0) && (processed[j]==0) && (time[U] != INT_MAX) && (time[U]+graph[U][j] < time[j])){
-                // printf("Im here\n");
-                time[j] = time[U] + graph[U][j];
-                parent[j] = U;
-                paths[j] = paths[U]+1;
+
+            if(K != -1){
+                if((graph[U][j] != 0) && (processed[j]==0) && (time[U] != INT_MAX)){
+                    if((time[U]+graph[U][j] > time[j]) && (paths[U]+1 < paths[j])){
+                        printf("The parent city %d has a smaller path %d than current city %d %d\n", U, paths[U]+1, j, paths[j]);
+                        time[j] = time[U] + graph[U][j];
+                        parent[j] = U;
+                        paths[j] = paths[U]+1;
+                    }
+                }
+            }
+            else{
+                if((graph[U][j] != 0) && (processed[j]==0) && (time[U] != INT_MAX) && (time[U]+graph[U][j] < time[j])){
+                    // if(paths[U]+1 > K){
+                    //     printf("more cities to traverse than K\n");
+                    //     printf("%d\n", paths[U]+1);
+                    // }
+                // else{
+                    time[j] = time[U] + graph[U][j];
+                    parent[j] = U;
+                    paths[j] = paths[U]+1;
+                //  }
+                    // printf("Im here\n");
+                    // if(K != -1){
+                    //     if(paths[U]+1 <= K){
+                    //         time[j] = time[U] + graph[U][j];
+                    //         parent[j] = U;
+                    //         paths[j] = paths[U]+1;
+                    //     }
+                    // }
+                    // else{
+                    //     time[j] = time[U] + graph[U][j];
+                    //     parent[j] = U;
+                    //     paths[j] = paths[U]+1;
+                    // }
+
+                }
             }
         }
     } 
@@ -56,18 +88,22 @@ void dijkstra(int **graph, int num_cities, int src, int K) {
     // }
     
     //printf("The shortest time is %d\n", sum);
+    int sum = 0;
+    sum = time[num_cities - 1];
     if(K != -1){
+        for(int l= 0; l < num_cities; l++){
+            printf("the number of paths for city %d is %d\n", l, paths[l]);
+        }
         if((paths[num_cities - 1]) > K){
             printf("%d\n", -1);
             
         }
         else{
             printf("you can reach the destination is less than %d cities\n", K);
+            printf("The shortest time is %d\n", sum);
         }
     }
     else{
-        int sum = 0;
-        sum = time[num_cities - 1];
         printf("The shortest time is %d\n", sum);
     }
 }

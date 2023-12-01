@@ -14,21 +14,23 @@ void bfs(int **graph, size_t num_cities, int start) {
     }
     Queue* q = createQueue((int)num_cities);
     enqueue(q, start);
+    // set the first value in the paths to be 0
     paths[0] = 0;
+    // while the q is not empty.
     while(isEmpty(q) == 0){
-        printf("in the while \n");
         int currCity = dequeue(q);
+      //  printf("I just DEQUEUING city %d\n", currCity);
         if(currCity == num_cities -1){
-            printf("the shortest path%d\n", paths[currCity] - 1);
+            printf("the number of cities in the shortest path is %d\n", paths[currCity]);
             return;
         }
         for(int i = 0; i < num_cities; i++){
             if((graph[currCity][i] != 0) && (visited[i] == 0)){
-                visited[i] == 1;
+                //printf("We are exploring the link is between city %d and city %d\n", currCity, i);
+                visited[i] = 1;
                 paths[i] = paths[currCity] + 1;
-                printf("PPPPPPPPP\n");
-                printf("I am enqueueing %d\n", paths[i]);
                 enqueue(q, i);
+                //printf("I just ENQUEUED city %d\n", i);
             }
         }
     }

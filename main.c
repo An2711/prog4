@@ -68,6 +68,7 @@ int main() {
             case 3:
                 //printf("Command is tree\n");
                 flag = false;
+                printf("Goodbye!\n");
                 break;
             default:
                 //printf("in the default\n");
