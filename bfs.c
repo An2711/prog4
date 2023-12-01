@@ -9,13 +9,6 @@ void bfs(int **graph, size_t num_cities, int start) {
     // integer array to keep track of shorest visited
 
     for(int i = 0; i < num_cities; i++){
-        for(int j = 0; j < num_cities; j++){
-            printf("LLLLLLLLL\n");
-            printf("%d\n", graph[i][j]);
-        }
-    }
-
-    for(int i = 0; i < num_cities; i++){
         visited[i] = 0;
         paths[i] = -1;
     }
@@ -23,16 +16,18 @@ void bfs(int **graph, size_t num_cities, int start) {
     enqueue(q, start);
     paths[0] = 0;
     while(isEmpty(q) == 0){
+        printf("in the while \n");
         int currCity = dequeue(q);
         if(currCity == num_cities -1){
-            printf("the shortest distance %d\n", paths[currCity] - 1);
+            printf("the shortest path%d\n", paths[currCity] - 1);
             return;
         }
         for(int i = 0; i < num_cities; i++){
             if((graph[currCity][i] != 0) && (visited[i] == 0)){
-                printf("%d\n", graph[currCity][i]);
                 visited[i] == 1;
                 paths[i] = paths[currCity] + 1;
+                printf("PPPPPPPPP\n");
+                printf("I am enqueueing %d\n", paths[i]);
                 enqueue(q, i);
             }
         }

@@ -3,6 +3,7 @@
 #include <string.h>
 #include "bfs.h"
 #include "dijkstra.h"
+#include "stdbool.h"
 
 
 int main() {
@@ -37,8 +38,48 @@ int main() {
         fscanf(fptr, ",%d", &time);
         graph[src][dest] = time;
     }
+    fclose(fptr);
+
+    int comm;
+    bool flag = true;
+    scanf("%d\n", &comm);
+    while(flag){
+        switch(comm){
+            case 0:
+                printf("Command is zero\n");
+                bfs(graph, numCities, 0);
+                scanf("%d\n", &comm);
+                break;
+
+            case 1:
+                //printf("Command is one\n");
+                scanf("%d\n", &comm);
+                // QUESTION: what value can we assume k will be when it is just command 1
+                dijkstra(graph, numCities, 0, -1);
+                break;
+
+            case 2:
+                //printf("Command is two\n");
+                int comm2;
+                scanf("%d\n", &comm2);
+                dijkstra(graph, numCities, 0, comm2);
+                scanf("%d\n", &comm);
+                break;
+            case 3:
+                //printf("Command is tree\n");
+                flag = false;
+                break;
+            default:
+                //printf("in the default\n");
+                scanf("%d\n", &comm);
+                break;
+        }
+
+
+    }
+
 
     //bfs(graph, numCities, 0);
-    dijkstra(graph, numCities, 0, 0);
+    //dijkstra(graph, numCities, 0, 5);
     
 }

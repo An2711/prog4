@@ -21,16 +21,12 @@ void dijkstra(int **graph, int num_cities, int src, int K) {
     int time[num_cities];
     int processed[num_cities];
     int U;
-    for(int i = 0; i < num_cities; i++){
-        for(int j = 0; j < num_cities; j++){
-            printf("THe values is %d\n", graph[i][j]);
-        }
-    }
-
+    int paths[num_cities];
     for(int i = 0; i < num_cities; i++){
         parent[i] = -1;
         time[i] = INT_MAX;
         processed[i] = 0;
+        paths[i] = 0;
     }
     // for(int i = 0; i < num_cities; i++){
     //     printf("%d\n", time[i]);
@@ -46,26 +42,32 @@ void dijkstra(int **graph, int num_cities, int src, int K) {
             // printf("HHHH\n");
             // printf("j is %d\n", j);
             // printf("%d\n", graph[U][j]);
-            printf("U is %d\n", U);
             if((graph[U][j] != 0) && (processed[j]==0) && (time[U] != INT_MAX) && (time[U]+graph[U][j] < time[j])){
                 // printf("Im here\n");
                 time[j] = time[U] + graph[U][j];
-               
                 parent[j] = U;
+                paths[j] = paths[U]+1;
             }
         }
+    } 
+    // int sum = 0;
+    // for(int i = 0; i < num_cities; i++){
+    //     printf("the path for %d is %d\n", i, paths[i]);
+    // }
+    
+    //printf("The shortest time is %d\n", sum);
+    if(K != -1){
+        if((paths[num_cities - 1]) > K){
+            printf("%d\n", -1);
+            
+        }
+        else{
+            printf("you can reach the destination is less than %d cities\n", K);
+        }
     }
-    for(int i = 0; i < num_cities; i++){
-        printf("%d\n", time[i]);
+    else{
+        int sum = 0;
+        sum = time[num_cities - 1];
+        printf("The shortest time is %d\n", sum);
     }
-    int sum = 0;
-    int curr = num_cities -1;
-    int p = parent[curr];
-    while(p != -1){
-        sum += time[curr];
-        curr = p;
-        p = parent[curr];
-    }
-    printf("\n");
-    printf("The shortest time is %d\n", sum);
 }
