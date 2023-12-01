@@ -38,6 +38,7 @@ int main() {
         graph[src][dest] = time;
     }
 
-    bfs(graph, numCities, 0);
+    //bfs(graph, numCities, 0);
+    dijkstra(graph, numCities, 0, 0);
     
 }
